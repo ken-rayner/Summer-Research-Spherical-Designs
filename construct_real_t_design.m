@@ -8,7 +8,7 @@ manifold = spherefactory(d,n);
 
 %set up optimisation problem
 design.M = manifold;
-design.cost = @(X) (1/(n^2))*(sum(sum((X'*X).^m)) + sum(sum((X'*X).^(m-1)));
+design.cost = @(X) (1/(n^2))*(sum(sum((X'*X).^m)) + sum(sum((X'*X).^(m-1))));
 design = manoptAD(design);
 
 %sense check gradient
@@ -19,5 +19,5 @@ checkgradient(design);
 
 %verify that this is a real design
 A = normc(x)
-real_design(A,m)
-real_design(A,(m-1))
+check_real_design(A,m)
+check_real_design(A,(m-1))

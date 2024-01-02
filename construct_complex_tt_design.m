@@ -17,4 +17,6 @@ checkgradient(design);
 %run optimisation
 [x,xcost] = trustregions(design)
 
-%% want to normalise and then evaluate cost function
+%verify that this is a design
+A = normc(x);
+check_complex_tt_design(A,m)

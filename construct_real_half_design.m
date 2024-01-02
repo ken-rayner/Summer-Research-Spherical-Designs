@@ -19,4 +19,4 @@ checkgradient(design);
 
 %verify that this is a real design
 A = normc(x)
-real_design(A,m)
+check_real_design(A,m)
