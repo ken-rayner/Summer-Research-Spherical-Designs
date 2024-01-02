@@ -5,7 +5,7 @@ These scripts construct designs of the desired order and size for the specified 
 
 Designs are constructed using Manopt for MATLAB to minimise the variational characterisation.
 
-Current improvements I am exploring are:
+Current improvements I am working on are:
 
-  - Floating point error
-  - Quaternionic algebra
+  - Mitigating floating point error
+  - Computing quaternionic algebra
