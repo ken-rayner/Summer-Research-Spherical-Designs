@@ -17,7 +17,7 @@ checkgradient(design);
 %run optimisation
 [x,xcost] = trustregions(design)
 
-% want to normalise and then evaluate cost function
+%normalise and then evaluate cost function
 A = normc(x)
 design.cost(A)
 
