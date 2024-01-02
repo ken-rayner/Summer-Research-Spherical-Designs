@@ -17,5 +17,7 @@ checkgradient(design);
 %run optimisation
 [x,xcost] = trustregions(design)
 
-%% want to normalise and then evaluate cost function
+%normalise and then evaluate cost function
 A = complex_normalise(x)
+[design.cost(A), 1/(nchoosek((d+t-1),1))]
+%if these two values are equal then this is indeed a spherical design
