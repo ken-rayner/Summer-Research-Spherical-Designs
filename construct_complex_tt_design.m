@@ -8,7 +8,7 @@ manifold = spherecomplexfactory(d,n);
 
 %set up optimisation problem
 design.M = manifold;
-design.cost = @(X) (1/(n^2))*(sum(sum((abs(X).^(2*t)))));
+design.cost = @(X) (1/(n^2))*(sum(sum((abs(X'*X).^(2*t)))));
 design = manoptAD(design);
 
 %sense check gradient
@@ -16,3 +16,6 @@ checkgradient(design);
 
 %run optimisation
 [x,xcost] = trustregions(design)
+
+%% want to normalise and then evaluate cost function
+A = complex_normalise(x)
