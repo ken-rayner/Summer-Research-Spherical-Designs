@@ -1,4 +1,4 @@
-construct(d,t,n,i)
+function construct(d,t,n,i)
     #define manifold to use
     manifold = obliquecomplexfactory(d,n)
     
