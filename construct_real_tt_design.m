@@ -4,7 +4,7 @@ function construct_real_tt_design(d,t,n)
 %n = number of vectors in design
 
 %define manifold for optimisation problem
-manifold = spherefactory(d,n);
+manifold = obliquefactory(d,n);
 
 %set up optimisation problem
 design.M = manifold;
@@ -18,8 +18,7 @@ checkgradient(design);
 [x,xcost] = trustregions(design)
 
 %normalise and then evaluate cost function
-A = normc(x)
-design.cost(A)
+design.cost(x)
 
 num = 1;
 for i = 1:2:(2*t-1)

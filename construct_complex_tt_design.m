@@ -4,7 +4,7 @@ function construct_complex_tt_design(d,t,n,iterations)
 %n = number of vectors in design
 
 %define manifold for optimisation problem
-manifold = spherecomplexfactory(d,n);
+manifold = obliquecomplexfactory(d,n);
 
 %set up optimisation problem
 design.M = manifold;
@@ -23,6 +23,5 @@ options.miniter = iterations;
 
 %normalise and then evaluate cost function
 format long
-A = complex_normalise(x)
-[design.cost(A), 1/(nchoosek((d+t-1),t))]
+[design.cost(x), 1/(nchoosek((d+t-1),t))]
 %if these two values are equal then this is indeed a spherical design

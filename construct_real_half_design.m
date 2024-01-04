@@ -4,7 +4,7 @@ function construct_real_half_design(d,m,n)
 %n = number of vectors in design
 
 %define manifold for optimisation problem
-manifold = spherefactory(d,n);
+manifold = obliquefactory(d,n);
 
 %set up optimisation problem
 design.M = manifold;
@@ -18,5 +18,4 @@ checkgradient(design);
 [x,xcost] = trustregions(design)
 
 %verify that this is a real design
-A = normc(x)
-check_real_design(A,m)
+check_real_design(x,m)
