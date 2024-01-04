@@ -1,6 +1,6 @@
 function construct(d,t,n,i)
     #define manifold to use
-    manifold = Oblique(n::Int, m::Int, field=ComplexF64)
+    manifold = Oblique(d, n, field=ComplexF64)
 
     
     #define cost function to optimise
