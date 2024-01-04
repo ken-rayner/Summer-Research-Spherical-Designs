@@ -1,6 +1,7 @@
 function construct(d,t,n,i)
     #define manifold to use
-    manifold = ComplexOblique(d,n)
+    manifold = Oblique(d,a,iscomplex=true)
+
     
     #define cost function to optimise
     cost(X::AbstractMatrix,t) = sum((X' *X)^(2*t))
