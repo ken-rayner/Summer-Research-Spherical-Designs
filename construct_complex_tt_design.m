@@ -1,4 +1,4 @@
-function construct_complex_tt_design(d,t,n)
+function construct_complex_tt_design(d,t,n,iterations)
 %d = dimension of vector space
 %m = order of the design
 %n = number of vectors in design
@@ -16,12 +16,13 @@ checkgradient(design);
 
 %GPT generated, sets minimum number of iterations
 options = struct();
-options.miniter = 10000;
+options.miniter = iterations;
 
 %run optimisation
 [x,xcost] = trustregions(design,[],options)
 
 %normalise and then evaluate cost function
+format long
 A = complex_normalise(x)
 [design.cost(A), 1/(nchoosek((d+t-1),t))]
 %if these two values are equal then this is indeed a spherical design
