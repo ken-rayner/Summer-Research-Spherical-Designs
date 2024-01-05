@@ -1,4 +1,4 @@
-function construct_real_tt_design(d,t,n)
+function construct_real_tt_design(d,t,n,iterations)
 %d = dimension of vector space
 %m = order of the design
 %n = number of vectors in design
@@ -14,18 +14,11 @@ design = manoptAD(design);
 %sense check gradient
 checkgradient(design);
 
+%GPT generated, sets minimum number of iterations
+options = struct();
+options.miniter = iterations;
+
 %run optimisation
-[x,xcost] = trustregions(design)
+[x,xcost] = trustregions(design,[],options)
 
-%normalise and then evaluate cost function
-design.cost(x)
-
-num = 1;
-for i = 1:2:(2*t-1)
-    num = num*i;
-end
-den = 1;
-for j = d:2:(d+2*t -2)
-    den = den*j;
-end
-c_t = num/den
+%%normalise and then evaluate cost function
