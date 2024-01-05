@@ -32,3 +32,5 @@ end
 
 [(1/n^2)*CV, b_m]
 [(1/n^2)*altsum b_m]
+
+end

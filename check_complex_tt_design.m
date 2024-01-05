@@ -9,3 +9,5 @@ altsum = sum(sum((adjoint(A) * A).^m));
 c_t = 1/(nchoosek((t+d-1),t))
 
 [(1/n^2)*altsum, c_t]
+
+end

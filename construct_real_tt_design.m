@@ -22,3 +22,5 @@ options.miniter = iterations;
 [x,xcost] = trustregions(design,[],options)
 
 %%normalise and then evaluate cost function
+
+end

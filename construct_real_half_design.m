@@ -23,3 +23,5 @@ options.miniter = iterations;
 
 %verify that this is a real design
 check_real_design(x,m)
+
+end

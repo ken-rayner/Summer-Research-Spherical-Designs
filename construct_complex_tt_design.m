@@ -29,3 +29,5 @@ options.tolstep = 1e-16;
 format long
 [design.cost(x), 1/(nchoosek((d+t-1),t))]
 %if these two values are equal then this is indeed a spherical design
+
+end
