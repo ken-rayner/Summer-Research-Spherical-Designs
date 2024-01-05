@@ -58,11 +58,11 @@ function M = obliquequaternionfactory(n, m, transposed)
 
     M.name = @() sprintf('Quaternion oblique manifold COB(%d, %d)', n, m);
 
-    M.dim = @() (2*n-1)*m; %EDIT
+    M.dim = @() (4*n-1)*m;
 
-    M.inner = @(x, d1, d2) real(d1(:)'*d2(:));%EDIT
+    M.inner = @(x, d1, d2) parts(d1(:)'*d2(:));
 
-    M.norm = @(x, d) norm(d(:));%EDIT
+    M.norm = @(x, d) norm(d(:));
 
     M.dist = @(x, y) norm(real(2*asin(.5*sqrt(sum(trnsp(abs(x - y).^2), 1)))));%EDIT
 
