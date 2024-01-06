@@ -62,7 +62,7 @@ function M = obliquequaternionfactory(n, m, transposed)
 
     M.inner = @(x, d1, d2) parts(d1(:)'*d2(:));
 
-    M.norm = @(x, d) norm(d(:));
+    M.norm = @(x, d) norm(norm(d(:));
 
     M.dist = @(x, y) norm(real(2*asin(.5*sqrt(sum(trnsp(abs(x - y).^2), 1)))));%EDIT
 
@@ -211,7 +211,7 @@ end
 % Random normalized tangent vector at x.
 function d = randomvec(n, m, x)%EDIT
 
-    d = randn(n, m) + 1i*randn(n, m);%EDIT
+    d = quaternion(randn(n, m),randn(n, m),randn(n, m),randn(n, m));
     d = projection(x, d);%EDIT
     d = d / norm(d(:));%EDIT
 
