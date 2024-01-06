@@ -52,7 +52,7 @@ function M = euclideanquaternionfactory(m, n)
     
     M.norm = @(x, d) norm(norm(d(:)));
     
-    M.dist = @(x, y) norm(norm(x(:)-y(:)));
+    M.dist = @(x, y) norm(norm(x(:)-y(:)));%Need to verify this
     
     M.typicaldist = @() sqrt(prod(dimensions_vec));%No change required?
     

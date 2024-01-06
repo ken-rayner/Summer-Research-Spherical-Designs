@@ -52,81 +52,95 @@ function M = spherequaternionfactory(n, m)
     
     M.inner = @(x, d1, d2) parts(d1(:)'*d2(:));
     
-    M.norm = @(x, d) norm(d, 'fro');%EDIT
+    M.norm = @(x, d) norm(norm(d(:)));
     
-    M.dist = @(x, y) real(2*asin(.5*norm(x - y, 'fro')));%EDIT
-    
-    M.typicaldist = @() pi;%EDIT
+    M.dist = @(x, y) norm(norm(x(:)-y(:)));%Need to verify this
+
+    M.typicaldist = @() pi;
     
     M.proj = @(x, d) reshape(d(:) - x(:)*(real(x(:)'*d(:))), n, m);%EDIT
     
     % For Riemannian submanifolds, converting a Euclidean gradient into a
     % Riemannian gradient amounts to an orthogonal projection.
-    M.egrad2rgrad = M.proj;%EDIT
+    M.egrad2rgrad = M.proj;
     
     M.ehess2rhess = @ehess2rhess;%EDIT
     function rhess = ehess2rhess(x, egrad, ehess, u)
         rhess = M.proj(x, ehess) - real((x(:)'*egrad(:)))*u;%EDIT
     end
     
-    M.tangent = M.proj;%EDIT
+    M.tangent = M.proj;
     
-    M.exp = @exponential;%EDIT
+    M.exp = @exponential;
     
-    M.retr = @retraction;%EDIT
+    M.retr = @retraction;
 
-    M.log = @logarithm;%EDIT
+    M.log = @logarithm;
     function v = logarithm(x1, x2)
-        v = M.proj(x1, x2 - x1);%EDIT
-        di = M.dist(x1, x2);%EDIT
+        v = M.proj(x1, x2 - x1);
+        di = M.dist(x1, x2);
         % If the two points are "far apart", correct the norm.
         if di > 1e-6
-            nv = norm(v, 'fro');%EDIT
-            v = v * (di / nv);%EDIT
+            nv = norm(norm(v));
+            v = v * (di / nv);
         end
     end
     
-    M.hash = @(x) ['z' hashmd5([real(x(:)) ; imag(x(:))])];%EDIT
+    M.hash = @qhash;
+    function mhash = qhash(x);
+        [x_r, x_i, x_j, x_k] = parts(x);
+        mhash = ['q' hashmd5([x_r(:); x_i(:); x_j(:); x_k(:)])];
+    end
     
-    M.rand = @() random(n, m);%EDIT
+    M.rand = @() random(n, m);
     
-    M.randvec = @(x) randomvec(n, m, x);%EDIT
+    M.randvec = @(x) randomvec(n, m, x);
     
-    M.lincomb = @matrixlincomb;%EDIT
+    M.lincomb = @matrixlincomb;
     
-    M.zerovec = @(x) zeros(n, m);%EDIT
+    M.zerovec = @(x) zeros(n, m);
     
-    M.transp = @(x1, x2, d) M.proj(x2, d);%EDIT
+    M.transp = @(x1, x2, d) M.proj(x2, d);
     
-    M.pairmean = @pairmean;%EDIT
+    M.pairmean = @pairmean;
     function y = pairmean(x1, x2)
-        y = x1+x2;%EDIT
-        y = y / norm(y, 'fro');%EDIT
+        y = x1+x2;
+        y = y / norm(norm(y));
     end
 
-    mn = m*n;%EDIT
-    M.vec = @(x, u_mat) [real(u_mat(:)) ; imag(u_mat(:))];%EDIT
-    M.mat = @(x, u_vec) reshape(u_vec(1:mn), m, n) + 1i*reshape(u_vec((mn+1):end), m, n);%EDIT
-    M.vecmatareisometries = @() true;%EDIT
+    mn = m*n;
+
+    M.vec = @mvec;%Should verify that this is correct
+    function u = mvec(x, u_mat)
+        [u_r, u_i, u_j, u_k] = parts(u_mat);
+        u = [u_r(:); u_i(:); u_j(:); u_k(:)];
+    end
+
+    M.mat = @mmat;%Should verify that this is correct
+    function X = mmat(x, u_vec)
+        X = quaternion(reshape(u_vec(1:mn),dimensions_vec),reshape(u_vec(mn+1:2*mn),dimensions_vec),reshape(u_vec(2*mn+1:3*mn),dimensions_vec),reshape(u_vec(3*mn+1:end),dimensions_vec));
+    end
+
+    M.vecmatareisometries = @() true;
 
 end
 
 % Exponential on the sphere
-function y = exponential(x, d, t)%EDIT
+function y = exponential(x, d, t)
 
-    if nargin == 2%EDIT
+    if nargin == 2
         % t = 1;
-        td = d;%EDIT
+        td = d;
     else
-        td = t*d;%EDIT
+        td = t*d;
     end
     
-    nrm_td = norm(td, 'fro');%EDIT
+    nrm_td = norm(norm(td));
     
-    if nrm_td > 0%EDIT
-        y = x*cos(nrm_td) + td*(sin(nrm_td)/nrm_td);%EDIT
+    if nrm_td > 0
+        y = x*cos(nrm_td) + td*(sin(nrm_td)/nrm_td); %Need to verify if this is correct
     else
-        y = x;%EDIT
+        y = x;%Need to verify if this is correct
     end
 
 end
@@ -139,23 +153,23 @@ function y = retraction(x, d, t)%EDIT
     end
     
     y = x+t*d;%EDIT
-    y = y/norm(y, 'fro');%EDIT
+    y = y/norm(norm(y));
 
 end
 
 % Uniform random sampling on the sphere.
-function x = random(n, m)%EDIT
+function x = random(n, m)%Verify that this is appropriate
 
-    x = randn(n, m) + 1i*randn(n, m);%EDIT
-    x = x/norm(x, 'fro');%EDIT
+    x = quaternion(randn(dimensions_vec),randn(dimensions_vec),randn(dimensions_vec),randn(dimensions_vec));
+    x = x/norm(norm(x));
 
 end
 
 % Random normalized tangent vector at x.
-function d = randomvec(n, m, x)%EDIT
+function d = randomvec(n, m, x)
 
-    d = randn(n, m) + 1i*randn(n, m);%EDIT
+    d = quaternion(randn(dimensions_vec),randn(dimensions_vec),randn(dimensions_vec),randn(dimensions_vec));
     d = reshape(d(:) - x(:)*(real(x(:)'*d(:))), n, m);%EDIT
-    d = d / norm(d, 'fro');%EDIT
+    d = d / norm(norm(d));
 
 end
