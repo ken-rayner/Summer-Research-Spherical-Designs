@@ -26,6 +26,8 @@ function M = euclideanquaternionfactory(m, n)
 %
 %%   January 5, 2024 (NB)
 %       Started adapting source for the case of the quaternions
+%%   January 6, 2024 (NB)
+%       Finished adapting source for the case of the quaternions
 
     % The size can be defined using both m and n, or simply with m.
     % If m is a scalar, then n is implicitly 1.
@@ -105,7 +107,7 @@ function M = euclideanquaternionfactory(m, n)
         u = [u_r(:); u_i(:); u_j(:); u_k(:)];
     end
 
-    M.mat = @mmat;
+    M.mat = @mmat;%Should verify that this is correct
     function X = mmat(x, u_vec)
         X = quaternion(reshape(u_vec(1:sz),dimensions_vec),reshape(u_vec(sz+1:2*sz),dimensions_vec),reshape(u_vec(2*sz+1:3*sz),dimensions_vec),reshape(u_vec(3*sz+1:end),dimensions_vec));
     end
