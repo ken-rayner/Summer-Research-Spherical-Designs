@@ -36,6 +36,9 @@ function M = spherequaternionfactory(n, m)
 %
 %%   January 5, 2024 (NB)
 %       Started adapting source for the case of the quaternions
+%
+%%   January 7, 2024 (NB)
+%       Completed initial adaptation to quaternions
 
     
     if ~exist('m', 'var')
@@ -58,15 +61,15 @@ function M = spherequaternionfactory(n, m)
 
     M.typicaldist = @() pi;
     
-    M.proj = @(x, d) reshape(d(:) - x(:)*(real(x(:)'*d(:))), n, m);%EDIT
+    M.proj = @(x, d) reshape(d(:) - x(:)*(real(x(:)'*d(:))), n, m);%VERIFY
     
     % For Riemannian submanifolds, converting a Euclidean gradient into a
     % Riemannian gradient amounts to an orthogonal projection.
     M.egrad2rgrad = M.proj;
     
-    M.ehess2rhess = @ehess2rhess;%EDIT
+    M.ehess2rhess = @ehess2rhess;%VERIFY
     function rhess = ehess2rhess(x, egrad, ehess, u)
-        rhess = M.proj(x, ehess) - real((x(:)'*egrad(:)))*u;%EDIT
+        rhess = M.proj(x, ehess) - real((x(:)'*egrad(:)))*u;%VERIFY
     end
     
     M.tangent = M.proj;
