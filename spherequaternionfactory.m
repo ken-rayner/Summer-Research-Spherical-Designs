@@ -39,7 +39,6 @@ function M = spherequaternionfactory(n, m)
 %
 %%   January 7, 2024 (NB)
 %       Completed initial adaptation to quaternions
-
     
     if ~exist('m', 'var')
         m = 1;
@@ -50,7 +49,7 @@ function M = spherequaternionfactory(n, m)
     else
         M.name = @() sprintf('Unit F-norm %dx%d Quaternion matrices', n, m);
     end
-    
+
     M.dim = @() 4*(n*m)-1;
     
     M.inner = @(x, d1, d2) parts(d1(:)'*d2(:));
@@ -121,7 +120,7 @@ function M = spherequaternionfactory(n, m)
 
     M.mat = @mmat;%Should verify that this is correct
     function X = mmat(x, u_vec)
-        X = quaternion(reshape(u_vec(1:mn),dimensions_vec),reshape(u_vec(mn+1:2*mn),dimensions_vec),reshape(u_vec(2*mn+1:3*mn),dimensions_vec),reshape(u_vec(3*mn+1:end),dimensions_vec));
+        X = quaternion(reshape(u_vec(1:mn),[m(:)', n(:)']),reshape(u_vec(mn+1:2*mn),[m(:)', n(:)']),reshape(u_vec(2*mn+1:3*mn),[m(:)', n(:)']),reshape(u_vec(3*mn+1:end),[m(:)', n(:)']));
     end
 
     M.vecmatareisometries = @() true;
@@ -163,7 +162,7 @@ end
 % Uniform random sampling on the sphere.
 function x = random(n, m)%Verify that this is appropriate
 
-    x = quaternion(randn(dimensions_vec),randn(dimensions_vec),randn(dimensions_vec),randn(dimensions_vec));
+    x = quaternion(randn([m(:)', n(:)']),randn([m(:)', n(:)']),randn([m(:)', n(:)']),randn([m(:)', n(:)']));
     x = x/norm(norm(x));
 
 end
@@ -171,7 +170,7 @@ end
 % Random normalized tangent vector at x.
 function d = randomvec(n, m, x)
 
-    d = quaternion(randn(dimensions_vec),randn(dimensions_vec),randn(dimensions_vec),randn(dimensions_vec));
+    d = quaternion(randn([m(:)', n(:)']),randn([m(:)', n(:)']),randn([m(:)', n(:)']),randn([m(:)', n(:)']));
     d = reshape(d(:) - x(:)*(real(x(:)'*d(:))), n, m);%EDIT
     d = d / norm(norm(d));
 

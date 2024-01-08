@@ -17,7 +17,6 @@ checkgradient(design);
 %GPT generated, sets minimum number of iterations
 options = struct();
 options.miniter = iterations;
-options.mininner = iterations;
 options.tolgradnorm = 1e-16;
 options.tolcost = 1e-16;
 options.tolstep = 1e-16;
