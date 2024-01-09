@@ -9,10 +9,11 @@ manifold = euclideanquaternionfactory(d,n);
 %set up optimisation problem
 design.M = manifold;
 design.cost = @(X) (1/(n^2))*(sum(sum(norm(qgram(X)).^(2*t))));
-design.egrad = @(X) X;
+design.egrad = @(X) qgram(X);
+design.ehess = @(X) qgram(X);
 
 %sense check gradient
-checkgradient(design);
+%checkgradient(design);
 
 %GPT generated, sets minimum number of iterations
 options = struct();

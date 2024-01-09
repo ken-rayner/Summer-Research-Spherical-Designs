@@ -52,7 +52,7 @@ function M = spherequaternionfactory(n, m)
 
     M.dim = @() 4*(n*m)-1;
     
-    M.inner = @(x, d1, d2) parts(d1(:)'*d2(:));
+    M.inner = @(x, d1, d2) parts(qarray_sum(d1(:).*d2(:)));
     
     M.norm = @(x, d) norm(norm(d(:)));
     

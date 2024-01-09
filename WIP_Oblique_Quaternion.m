@@ -60,7 +60,7 @@ function M = obliquequaternionfactory(n, m, transposed)
 
     M.dim = @() (4*n-1)*m;
 
-    M.inner = @(x, d1, d2) parts(d1(:)'*d2(:));
+    M.inner = @(x, d1, d2) parts(qarray_sum(d1(:).*d2(:)));
 
     M.norm = @(x, d) norm(norm(d(:));
 
