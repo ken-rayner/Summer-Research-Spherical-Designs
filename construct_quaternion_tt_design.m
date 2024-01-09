@@ -4,11 +4,11 @@ function construct_quaternion_tt_design(d,t,n,iterations)
 %n = number of vectors in design
 
 %define manifold for optimisation problem
-manifold = euclideanquaternionfactory(d,n);
+manifold = obliquefactory(d,(4*n));
 
 %set up optimisation problem
 design.M = manifold;
-design.cost = @(X) (1/(n^2))*(sum(sum(norm(qgram(X)).^(2*t))));
+design.cost = @(X) sum(sum(qcost(X).^(2*t)));
 design.egrad = @(X) qgram(X);
 design.ehess = @(X) qgram(X);
 
