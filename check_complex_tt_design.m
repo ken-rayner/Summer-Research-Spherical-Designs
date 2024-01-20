@@ -3,7 +3,7 @@ function check_complex_tt_design(A,t)
 
 [d,n] = size(A);
 
-altsum = sum(sum((adjoint(A) * A).^m));
+altsum = sum(sum(abs(A' * A).^(2*t)));
 
 %calculating lower bound of characteristic
 c_t = 1/(nchoosek((t+d-1),t))
