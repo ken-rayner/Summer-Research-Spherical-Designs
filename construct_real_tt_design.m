@@ -1,4 +1,4 @@
-function construct_real_tt_design(d,t,n,iterations)
+function error = construct_real_tt_design(d,t,n,iterations)
 %d = dimension of vector space
 %m = order of the design
 %n = number of vectors in design
@@ -21,6 +21,6 @@ options.miniter = iterations;
 %run optimisation
 [x,xcost] = trustregions(design,[],options)
 
-%%normalise and then evaluate cost function
+error = design.cost(x) - 1/(nchoosek((d+t-1),t));
 
 end

@@ -16,7 +16,7 @@ checkgradient(design);
 
 %GPT generated, sets minimum number of iterations
 options = struct();
-options.miniter = iterations;
+%options.miniter = iterations;
 
 %run optimisation
 [x,xcost] = trustregions(design,[],options)

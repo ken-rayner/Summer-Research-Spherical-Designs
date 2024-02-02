@@ -1,4 +1,4 @@
-function design_min_vectors(d,t,l)
+function complex_design_min_vectors(d,t,l)
 
 for i = 1:l
     error(i) = construct_complex_tt_design(d,t,i,100);
