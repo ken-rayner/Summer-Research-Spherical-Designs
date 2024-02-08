@@ -1,8 +1,5 @@
 function prod = qmult(q1,q2)
 
-%%ADD CHECK OF DIMENSIONS
-%%SHOULD ONLY WORK IF BOTH ARE 1x4 ARRAYS
-
 a = q1(1);
 b = q1(2);
 c = q1(3);

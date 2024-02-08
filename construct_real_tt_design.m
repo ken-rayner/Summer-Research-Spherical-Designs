@@ -8,7 +8,7 @@ manifold = obliquefactory(d,n);
 
 %set up optimisation problem
 design.M = manifold;
-design.cost = @(X) (1/(n^2))*(sum(sum((abs(X'*X).^(2*t)))));
+design.cost = @(X) (1/(n^2))*sum(sum((abs(X'*X).^(2*t))));
 design = manoptAD(design);
 
 %sense check gradient
@@ -16,11 +16,24 @@ checkgradient(design);
 
 %GPT generated, sets minimum number of iterations
 options = struct();
-options.miniter = iterations;
+%options.miniter = iterations;
 
 %run optimisation
 [x,xcost] = trustregions(design,[],options)
 
-error = design.cost(x) - 1/(nchoosek((d+t-1),t));
+%VC target
+ct_numerator = 1;
+for i = 1:2:((2*t)-1)
+    ct_numerator = ct_numerator*i
+end
+
+ct_denominator = 1;
+for j = d:(d+2*(t-1))
+    ct_denominator = ct_denominator*j
+end
+
+c_t = ct_numerator/ct_denominator
+
+error = design.cost(x) - c_t;
 
 end
