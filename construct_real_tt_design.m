@@ -28,7 +28,7 @@ for i = 1:2:((2*t)-1)
 end
 
 ct_denominator = 1;
-for j = d:(d+2*(t-1))
+for j = d:2:(d+2*(t-1))
     ct_denominator = ct_denominator*j
 end
 
